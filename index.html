@@ -10,89 +10,123 @@
 @media(max-width:900px){.kpi{padding:19px}.value{font-size:38px}.panel-head{align-items:flex-start;flex-direction:column}.stage{padding:0 12px}.stage-label{font-size:12px}}
 @media(max-width:640px){.header-inner{padding:17px 20px}.wordmark{font-size:25px}main{padding:28px 20px 20px}.title-row{display:block}h1{font-size:34px}.period{margin-top:22px;min-width:0}.meta{font-size:11px;margin-bottom:22px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.kpi{padding:17px 14px;border-radius:12px}.kpi h2{font-size:12px}.value{font-size:36px;margin:10px 0}.kpi small{font-size:11px}.insight{font-size:13px;margin:20px 0}.panel{padding:21px 16px;border-radius:12px}h2{font-size:19px}.segmented{width:100%}.segmented button{flex:1;padding:6px 7px;font-size:12px}.chart{height:235px;padding-left:26px}.gridlines{left:26px}.columns{gap:12px}.bar-button{width:75%}.bar-value{font-size:13px}.bar-label{font-size:10px}.funnel{grid-template-columns:1fr;gap:16px}.stage{display:grid;grid-template-columns:1fr auto;padding:0!important;border:0;gap:4px 18px;align-items:center}.stage strong{font-size:25px;margin:0}.stage-meter{grid-column:1/-1;margin:0}.stage small{grid-column:1/-1}.section-title{align-items:flex-start;flex-direction:column;gap:4px}footer{flex-direction:column;gap:8px}.table-wrap{margin-right:-16px}.chart-note{font-size:11px}}
 @media print{button,select,.period,.notes{display:none}.panel,.kpi{break-inside:avoid}main{padding:15px}.kpis{grid-template-columns:repeat(4,1fr)}}
+.chart-scroll{overflow-x:auto}.chart{min-width:440px}.columns{grid-template-columns:repeat(var(--weeks,5),minmax(60px,1fr))}.period{max-width:340px}.coverage{display:block;margin-top:4px}#reset-week{font-size:12px;margin-left:8px}#meta.stale{color:#876b36}[hidden]{display:none!important}
 </style>
 </head>
 <body>
-<header><div class="header-inner"><span class="wordmark">Kodara</span><span class="badge">September 2026 · Snapshot</span></div></header>
+<header><div class="header-inner"><span class="wordmark">Kodara</span><span class="badge">Daily reporting</span></div></header>
 <main>
-<div class="title-row"><div><h1>Triager performance</h1><p>From the first answer to a booked call.</p></div><div class="period"><label for="period">Reporting period</label><select id="period"><option value="month">September so far · Sep 1–29</option></select></div></div>
-<div class="meta">Through Sep 29, 2026 at 8:35 PM Pacific · Known team and test accounts excluded</div>
+<div class="title-row"><div><h1>Triager performance</h1><p>From the first answer to a booked call.</p></div><div class="period"><label for="period">Reporting period</label><select id="period" disabled><option>Loading periods…</option></select></div></div>
+<div class="meta" id="meta" role="status">Loading the latest report…</div>
+<div id="dashboard-content" hidden>
 <section class="kpis" aria-label="Selected period totals" id="kpis" aria-live="polite"></section>
-<div class="insight"><strong>Last full week: 56 people booked, down 16%.</strong> <span>Widget visitors fell 26%, while email submissions held nearly steady (140 to 135). Calendar reach fell from 77 to 59.</span></div>
+<div class="insight" id="insight"></div>
 <section class="panel" aria-labelledby="chart-title">
 <div class="panel-head"><div><h2 id="chart-title">Week by week</h2><p id="chart-sub">People who completed a booking through the widget.</p></div><div class="segmented" role="group" aria-label="Chart metric"><button data-metric="booked" aria-pressed="true">Bookings</button><button data-metric="emails" aria-pressed="false">Emails</button><button data-metric="calendar" aria-pressed="false">Calendar</button><button data-metric="loaded" aria-pressed="false">Visitors</button></div></div>
-<div class="chart" id="chart" aria-label="Weekly activity chart"></div><p class="chart-note">Striped bars are partial weeks. Select a bar to explore that week. Counts start at zero.</p>
+<div class="chart-scroll" tabindex="0" role="region" aria-label="Scrollable weekly activity chart"><div class="chart" id="chart"></div></div><p class="chart-note">Striped bars are partial weeks. Select a bar to explore that week. Counts start at zero.</p>
 </section>
-<section class="panel" aria-labelledby="funnel-title"><div class="section-title"><div><h2 id="funnel-title">Activity across the funnel</h2><p class="sub">Unique people at each step · period activity, not a cohort conversion funnel</p></div><span id="selected-label">September so far</span></div><div class="funnel" id="funnel"></div></section>
+<section class="panel" aria-labelledby="funnel-title"><div class="section-title"><div><h2 id="funnel-title">Activity across the funnel</h2><p class="sub">Unique people at each step · period activity, not a cohort conversion funnel</p></div><div><span id="selected-label"></span> <button id="reset-week" hidden>Show whole period</button></div></div><div class="funnel" id="funnel"></div></section>
 <section class="panel" aria-labelledby="table-title"><div class="panel-head"><div><h2 id="table-title">Question-by-question breakdown</h2><p class="sub" id="breakdown-note" aria-live="polite"></p></div></div><div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable weekly breakdown"><table><caption class="sr-only">Weekly unique people by Triager step</caption><thead><tr><th scope="col">Week</th><th scope="col">Widget loaded</th><th scope="col">Answered Q1</th><th scope="col">Email</th><th scope="col">Business</th><th scope="col">Revenue</th><th scope="col">Calendar</th><th scope="col">Time selected</th><th scope="col">Booked</th></tr></thead><tbody id="rows"></tbody><tfoot id="total"></tfoot></table></div></section>
 <section class="panel" aria-labelledby="rates-title"><h2 id="rates-title">Key progression rates</h2><p class="sub">Compare the larger steps week by week. Each cell shows the later count ÷ the earlier count; these are period activity ratios, not cohort conversion rates.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable weekly progression rates"><table><caption class="sr-only">Weekly progression ratios between selected Triager steps</caption><thead><tr id="rate-head"></tr></thead><tbody id="rate-rows"></tbody><tfoot id="rate-total"></tfoot></table></div></section>
 <details class="notes"><summary>Definitions &amp; data notes</summary><ul>
-<li><strong>Source:</strong> PostHog project 572719. This is a saved snapshot, not a live connection. Period: September 1, 12:00 AM through September 29, 8:35 PM, America/Los_Angeles. Weeks start Monday; September 30 is not included.</li>
-<li><strong>Unique people:</strong> Each person is counted once per event or step within the selected period. Monthly totals are independently deduplicated and do not equal the sum of the weekly rows.</li>
+<li><strong>Source:</strong> PostHog project 572719, refreshed daily. Months and last 7/30/90 days use complete America/Los_Angeles days through yesterday. Weeks start Monday and are clipped to the selected range. Coverage begins September 1, 2026; earlier dates are unavailable. New months appear after their first complete day.</li>
+<li><strong>Unique people:</strong> Each person is counted once per event or step within the selected period. Whole-period totals are independently deduplicated and may not equal the sum of the weekly rows.</li>
 <li><strong>Widget loaded:</strong> Successfully initialized widgets with captured analytics, not all website visitors or load attempts. This report covers production tracking on kodarahealth.com and go.kodara.com; www and preview origins are not included by the checked analytics configuration.</li>
 <li><strong>Q1:</strong> Completed the video-readiness question. Email, business, revenue and time selected count completed steps. Calendar counts people shown the day-selection step.</li>
-<li><strong>Booked:</strong> People with a tracked booking completion, not uncancelled appointments or attended calls. The month has 206 completion events from 202 people.</li>
+<li><strong>Booked:</strong> People with a tracked booking completion, not uncancelled appointments or attended calls.</li>
 <li><strong>Percentages:</strong> Ratios of activity counts within the selected period, not ordered same-person conversion rates. Qualification intentionally filters some people out, so differences between steps are not all abandonment.</li>
 <li><strong>Exclusions:</strong> Known internal users, Kodara team addresses, example.com tests and identified personal test accounts. Unidentified tests or bots may remain.</li>
 </ul></details>
-<footer><span>PostHog snapshot · America/Los_Angeles</span><a href="https://us.posthog.com/project/572719" target="_blank" rel="noopener noreferrer">Open source in PostHog</a></footer>
+<footer><span>Daily PostHog aggregates · America/Los_Angeles</span><a href="https://us.posthog.com/project/572719" target="_blank" rel="noopener noreferrer">Open source in PostHog</a></footer>
+</div>
 <noscript><p>Enable JavaScript to view the dashboard.</p></noscript>
 </main>
 <script src="data.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 const format = n => n.toLocaleString('en-US');
-let metric = 'booked';
+const escapeHtml = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let metric='booked', report, period, weeks=[], selectedWeek=null;
 const descriptions = {booked:'People who completed a booking through the widget.',emails:'People who submitted their email address.',calendar:'People who reached the calendar day-selection step.',loaded:'People whose widget successfully initialized with analytics.'};
-weeks.forEach((w,i) => $('period').add(new Option(w.label+' · '+w.note,String(i))));
-function renderBreakdown(){
- function cells(d){
-  return fields.map((field,i)=>{
-   const note = i===0 ? 'Starting step' : percent(d[field],d[fields[i-1]])+' of previous';
-   return `<td><strong>${format(d[field])}</strong><small>${note}</small></td>`;
-  }).join('');
- }
- $('rows').innerHTML = weeks.map((w,i)=>`<tr data-week="${i}" class="${$('period').value===String(i)?'selected':''}"><td><button data-week="${i}">${w.label}</button><small>${w.note}</small></td>${cells(w)}</tr>`).join('');
- $('total').innerHTML = `<tr><td>September unique totals<small>Deduplicated across the month</small></td>${cells(month)}</tr>`;
- $('breakdown-note').textContent = 'People at each step, with % of the previous column underneath. Period activity ratios, not cohort conversion rates.';
-}
 const rateColumns = [
- ['Q1 → calendar','q1','calendar'],
- ['Q1 → booked','q1','booked'],
- ['Email → calendar','emails','calendar'],
- ['Email → booked','emails','booked'],
- ['Calendar → booked','calendar','booked'],
- ['Loaded → booked','loaded','booked'],
+ ['Q1 → calendar','q1','calendar'], ['Q1 → booked','q1','booked'],
+ ['Email → calendar','emails','calendar'], ['Email → booked','emails','booked'],
+ ['Calendar → booked','calendar','booked'], ['Loaded → booked','loaded','booked'],
 ];
-$('rate-head').innerHTML = '<th scope="col">Week</th>'+rateColumns.map(([label])=>`<th scope="col">${label}</th>`).join('');
+const weekLabel = w => `${new Date(w.start+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'})}–${new Date(lastDay(w.end)+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'})}`;
+const weekNote = w => w.days===7 ? 'Full week' : `Partial week · ${w.days} ${w.days===1?'day':'days'}`;
+function countCells(d){
+ return fields.map((f,i)=>`<td><strong>${format(d[f])}</strong><small>${i===0?'Starting step':percent(d[f],d[fields[i-1]])+' of previous'}</small></td>`).join('');
+}
 function rateCells(d){
  return rateColumns.map(([,from,to])=>`<td><strong>${percent(d[to],d[from])}</strong><small>${format(d[to])} ÷ ${format(d[from])}</small></td>`).join('');
 }
-$('rate-rows').innerHTML = weeks.map((w,i)=>`<tr data-week="${i}"><td>${w.label}<small>${w.note}</small></td>${rateCells(w)}</tr>`).join('');
-$('rate-total').innerHTML = `<tr><td>September<small>From monthly unique totals</small></td>${rateCells(month)}</tr>`;
+function renderPeriod(){
+ period=report.ranges.find(p=>p.id===$('period').value);
+ weeks=period.weeks;
+ selectedWeek=null;
+ $('rows').innerHTML=weeks.map((w,i)=>`<tr data-week="${i}"><td><button data-week="${i}">${weekLabel(w)}</button><small>${weekNote(w)}</small></td>${countCells(w)}</tr>`).join('');
+ $('rate-rows').innerHTML=weeks.map((w,i)=>`<tr data-week="${i}"><td>${weekLabel(w)}<small>${weekNote(w)}</small></td>${rateCells(w)}</tr>`).join('');
+ $('total').innerHTML=`<tr><td>Whole-period totals<small>Independently deduplicated</small></td>${countCells(period.totals)}</tr>`;
+ $('rate-total').innerHTML=`<tr><td>Whole period<small>From unique totals</small></td>${rateCells(period.totals)}</tr>`;
+ const full=weeks.filter(w=>w.days===7);
+ $('insight').textContent=full.length>=2 ? `Last full week (${weekLabel(full.at(-1))}): ${format(full.at(-1).booked)} people booked; previous full week: ${format(full.at(-2).booked)}. Change: ${change(full.at(-1).booked,full.at(-2).booked)}.` : 'This range contains fewer than two full weeks. Partial weeks include only dates inside the selected period.';
+ if(!fields.some(f=>period.totals[f]>0)) $('insight').textContent='No tracked activity in this period.';
+ const generated=new Date(report.generatedAt).toLocaleString('en-US',{timeZone:report.timezone,month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'});
+ $('meta').textContent=`${rangeLabel(period)} · Pacific · Updated ${generated} Pacific · Known team and test accounts excluded`;
+ if(period.start!==period.requestedStart) $('meta').append(Object.assign(document.createElement('span'),{className:'coverage',textContent:`Limited coverage: this preset starts before tracking began on ${dateLabel(report.coverageStart)}.`}));
+ $('meta').classList.toggle('stale',isStale(report));
+ if(isStale(report)) $('meta').append(Object.assign(document.createElement('span'),{className:'coverage',textContent:'Refresh overdue: showing the last successful snapshot. Counts may be out of date.'}));
+ render();
+}
 function renderChart(){
- const max = Math.ceil(Math.max(...weeks.map(w=>w[metric]))/4/5)*5*4;
- $('chart-sub').textContent = descriptions[metric];
- $('chart').innerHTML = `<div class="gridlines" aria-hidden="true">${[4,3,2,1,0].map(t=>`<div class="gridline"><span>${format(max*t/4)}</span></div>`).join('')}</div><div class="columns">${weeks.map((w,i)=>`<div class="column"><button class="bar-button ${i===0||i===4?'partial':''}" data-week="${i}" style="height:${w[metric]/max*100}%" aria-label="${w.label}: ${w[metric]} ${metric}. ${w.note}. Select week." aria-pressed="${$('period').value===String(i)}"><span class="bar-value">${format(w[metric])}</span></button><span class="bar-label">${w.label}</span></div>`).join('')}</div>`;
+ const max=Math.max(20,Math.ceil(Math.max(...weeks.map(w=>w[metric]))/20)*20);
+ $('chart-sub').textContent=descriptions[metric];
+ $('chart').style.setProperty('--weeks',weeks.length);
+ $('chart').style.minWidth=Math.max(440,weeks.length*90)+'px';
+ $('chart').innerHTML=`<div class="gridlines" aria-hidden="true">${[4,3,2,1,0].map(t=>`<div class="gridline"><span>${format(max*t/4)}</span></div>`).join('')}</div><div class="columns">${weeks.map((w,i)=>`<div class="column"><button class="bar-button ${w.days<7?'partial':''}" data-week="${i}" style="height:${w[metric]/max*100}%" aria-label="${rangeLabel(w)}: ${w[metric]} ${metric}. ${weekNote(w)}. Select week." aria-pressed="${selectedWeek===i}"><span class="bar-value">${format(w[metric])}</span></button><span class="bar-label">${weekLabel(w)}</span></div>`).join('')}</div>`;
  document.querySelectorAll('[data-metric]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.metric===metric)));
 }
 function render(){
- const d = $('period').value==='month' ? month : weeks[Number($('period').value)];
- const cards = [['Widget loaded','loaded','Successful tracked loads'],['Submitted email','emails',percent(d.emails,d.q1)+' of Q1 count'],['Reached calendar','calendar',percent(d.calendar,d.emails)+' of email count'],['People booked','booked',percent(d.booked,d.loaded)+' of widget-load count']];
- $('kpis').innerHTML = cards.map(([label,key,note])=>`<article class="kpi"><h2>${label}</h2><div class="value">${format(d[key])}</div><small>${note}</small></article>`).join('');
- $('selected-label').textContent=d.label;
- $('funnel').innerHTML = [['Widget loaded','loaded'],['Answered Q1','q1'],['Submitted email','emails'],['Reached calendar','calendar'],['People booked','booked']].map(([label,key])=>`<div class="stage"><span class="stage-label">${label}</span><strong>${format(d[key])}</strong><div class="stage-meter" aria-hidden="true"><i style="width:${d[key]/d.loaded*100}%"></i></div><small>${percent(d[key],d.loaded)} of widget-load count</small></div>`).join('');
- document.querySelectorAll('tr[data-week]').forEach(row=>row.classList.toggle('selected',row.dataset.week===$('period').value));
+ const d=selectedWeek===null ? period.totals : weeks[selectedWeek];
+ const cards=[['Widget loaded','loaded','Successful tracked loads'],['Submitted email','emails',percent(d.emails,d.q1)+' of Q1 count'],['Reached calendar','calendar',percent(d.calendar,d.emails)+' of email count'],['People booked','booked',percent(d.booked,d.loaded)+' of widget-load count']];
+ $('kpis').innerHTML=cards.map(([label,key,note])=>`<article class="kpi"><h2>${label}</h2><div class="value">${format(d[key])}</div><small>${note}</small></article>`).join('');
+ $('selected-label').textContent=selectedWeek===null ? period.label : rangeLabel(weeks[selectedWeek]);
+ $('reset-week').hidden=selectedWeek===null;
+ $('funnel').innerHTML=[['Widget loaded','loaded'],['Answered Q1','q1'],['Submitted email','emails'],['Reached calendar','calendar'],['People booked','booked']].map(([label,key])=>`<div class="stage"><span class="stage-label">${label}</span><strong>${format(d[key])}</strong><div class="stage-meter" aria-hidden="true"><i style="width:${d.loaded?Math.min(100,d[key]/d.loaded*100):0}%"></i></div><small>${percent(d[key],d.loaded)} of widget-load count</small></div>`).join('');
+ document.querySelectorAll('tr[data-week]').forEach(row=>row.classList.toggle('selected',selectedWeek!==null&&Number(row.dataset.week)===selectedWeek));
  renderChart();
 }
-$('period').addEventListener('change',render);
+$('period').addEventListener('change',renderPeriod);
+$('reset-week').addEventListener('click',()=>{selectedWeek=null;render();$('period').focus();});
 document.addEventListener('click',e=>{
+ if(!period) return;
  const week=e.target.closest('button[data-week]');
- if(week){$('period').value=week.dataset.week;render();if(week.classList.contains('bar-button'))document.querySelector(`.bar-button[data-week="${week.dataset.week}"]`).focus({preventScroll:true});}
+ if(week){selectedWeek=Number(week.dataset.week);render();if(week.classList.contains('bar-button'))document.querySelector(`.bar-button[data-week="${selectedWeek}"]`).focus({preventScroll:true});}
  const toggle=e.target.closest('[data-metric]');
  if(toggle){metric=toggle.dataset.metric;renderChart();}
 });
-renderBreakdown();
-render();
+async function loadReport(){
+ try{
+  const response=await fetch('report.json',{cache:'no-store',signal:AbortSignal.timeout(15000)});
+  if(!response.ok) throw new Error('Report unavailable');
+  report=validateReport(await response.json());
+  $('period').replaceChildren();
+  for(const [label,rolling] of [['Calendar months',false],['Rolling periods · complete days',true]]){
+   const group=document.createElement('optgroup');group.label=label;
+   report.ranges.filter(p=>p.id.startsWith('last')===rolling).forEach(p=>group.append(new Option(p.label,p.id)));
+   $('period').append(group);
+  }
+  $('period').disabled=false;
+  $('rate-head').innerHTML='<th scope="col">Week</th>'+rateColumns.map(([label])=>`<th scope="col">${escapeHtml(label)}</th>`).join('');
+  $('breakdown-note').textContent='People at each step, with % of the previous column underneath. Period activity ratios, not cohort conversion rates.';
+  renderPeriod();
+  $('dashboard-content').hidden=false;
+ }catch(error){
+  $('meta').textContent='Could not load the report. Please reload this page to try again.';
+  $('meta').setAttribute('role','alert');
+ }
+}
+loadReport();
 </script>
 </body></html>
