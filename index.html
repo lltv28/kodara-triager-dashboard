@@ -120,9 +120,14 @@ document.addEventListener('click',e=>{
 });
 async function loadReport(){
  try{
-  const response=await fetch('report.json',{cache:'no-store',signal:AbortSignal.timeout(15000)});
-  if(!response.ok) throw new Error('Report unavailable');
-  report=validateReport(await response.json());
+  // Hermes previews block fetch (CSP connect-src 'none'), so their bundle embeds this same snapshot as window.REPORT.
+  let snapshot=window.REPORT;
+  if(!snapshot){
+   const response=await fetch('report.json',{cache:'no-store',signal:AbortSignal.timeout(15000)});
+   if(!response.ok) throw new Error('Report unavailable');
+   snapshot=await response.json();
+  }
+  report=validateReport(snapshot);
   $('period').replaceChildren();
   for(const [label,rolling] of [['Calendar months',false],['Rolling periods · complete days',true]]){
    const group=document.createElement('optgroup');group.label=label;
