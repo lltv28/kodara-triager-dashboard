@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light"><title>Kodara · Triager</title>
+<style>
+:root{--ink:#20362d;--green:#37684f;--muted:#62736b;--line:#dce3de;--soft:#f6f8f6;--tint:#edf4ee;--amber:#876b36}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,select{font:inherit;color:inherit}button,select,summary{cursor:pointer}button:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #9cbd7d;outline-offset:4px}button{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 15px;min-height:40px}button:hover{background:var(--soft)}a{color:var(--green);text-underline-offset:3px}header{border-bottom:1px solid var(--line)}.header-inner{max-width:1400px;margin:auto;padding:23px 40px;display:flex;align-items:center;justify-content:space-between;gap:20px}.wordmark{font-size:28px;font-weight:650;letter-spacing:-1.3px;color:var(--green)}.badge{font-size:12px;border:1px solid var(--line);padding:6px 10px;border-radius:7px;color:var(--muted)}main{max-width:1400px;margin:auto;padding:42px 40px 24px}.title-row{display:flex;justify-content:space-between;align-items:center;gap:24px}h1{font-size:42px;letter-spacing:-1.9px;line-height:1.1;margin:0 0 12px;font-weight:650}h2{font-size:21px;letter-spacing:-.5px;margin:0 0 5px;font-weight:600}p{margin:0;color:var(--muted)}.period{min-width:250px}.period label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}select{width:100%;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;min-height:48px}.meta{font-size:12px;color:var(--muted);margin:20px 0 29px}.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.kpi{border:1px solid var(--line);border-radius:16px;padding:23px 24px}.kpi:last-child{background:var(--tint);border-color:#cbdccc}.kpi h2{font-size:14px;letter-spacing:0;font-weight:500;color:#496054}.value{font-size:48px;font-weight:600;letter-spacing:-2px;line-height:1.25;margin:12px 0}.kpi small{color:var(--muted);font-size:12px}.insight{border-left:3px solid var(--amber);background:#fafaf7;border-radius:0 8px 8px 0;padding:15px 18px;margin:24px 0 30px;font-size:14px;line-height:1.65}.insight span{color:var(--muted)}.panel{border:1px solid var(--line);border-radius:16px;padding:25px 27px;margin-top:22px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:20px}.panel-head p,.sub{font-size:13px}.segmented{display:flex;gap:3px;padding:3px;background:var(--soft);border:1px solid var(--line);border-radius:10px}.segmented button{border-color:transparent;background:none;white-space:nowrap;padding:6px 12px;min-height:36px;font-size:13px}.segmented button[aria-pressed=true]{background:#fff;border-color:var(--line);box-shadow:0 1px 3px #20362d08}.chart{position:relative;height:262px;margin:27px 0 0;padding:0 0 30px 38px}.gridlines{position:absolute;left:38px;right:0;top:0;bottom:30px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}.gridline{border-top:1px solid #e9eeea;position:relative}.gridline span{position:absolute;right:calc(100% + 9px);transform:translateY(-50%);font-size:11px;color:var(--muted)}.columns{height:100%;display:grid;grid-template-columns:repeat(5,1fr);gap:24px;position:relative}.column{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;position:relative;min-width:0}.bar-button{position:relative;border:0;padding:0;min-height:3px;border-radius:5px 5px 0 0;background:var(--green);width:min(72%,115px)}.bar-button:hover{background:#294e3b}.bar-button.partial{background:repeating-linear-gradient(135deg,#94b39e 0,#94b39e 5px,#a5c0ad 5px,#a5c0ad 7px)}.bar-button[aria-pressed=true]{outline:2px solid var(--ink);outline-offset:4px}.bar-value{position:absolute;top:-26px;left:0;right:0;font-size:15px;font-weight:600;color:var(--ink)}.bar-label{position:absolute;bottom:-29px;white-space:nowrap;font-size:12px;color:var(--muted)}.chart-note{font-size:12px;margin:15px 0 0;color:var(--muted)}.section-title{display:flex;gap:20px;justify-content:space-between;align-items:center}.section-title small{color:var(--muted);font-size:12px}.funnel{display:grid;grid-template-columns:repeat(5,1fr);margin-top:23px;gap:0}.stage{padding:0 20px;border-left:1px solid var(--line)}.stage:first-child{padding-left:0;border-left:0}.stage:last-child{padding-right:0}.stage-label{font-size:13px;color:var(--muted)}.stage strong{display:block;font-size:32px;letter-spacing:-1px;font-weight:600;margin:7px 0 13px}.stage-meter{height:5px;background:#eef2ee;border-radius:2px;margin-bottom:9px;overflow:hidden}.stage-meter i{display:block;height:100%;background:var(--green)}.stage small{font-size:11px;color:var(--muted)}.table-wrap{overflow-x:auto;margin-top:20px}table{border-collapse:collapse;width:100%;white-space:nowrap;font-size:13px;font-variant-numeric:tabular-nums}th,td{padding:15px 14px;text-align:right;border-bottom:1px solid #e8ede9}th{font-size:11px;font-weight:500;color:var(--muted);background:var(--soft)}th:first-child,td:first-child{text-align:left;padding-left:16px}tbody tr.selected{background:var(--tint)}tbody tr:last-child td{border-bottom:0}td small{display:block;font-size:10px;color:var(--muted);font-weight:400}td button{font-size:13px;border:0;padding:0;min-height:30px;background:none;text-align:left;color:var(--green);font-weight:600}tfoot td{font-weight:600;border-top:1px solid var(--line);border-bottom:0;background:var(--soft)}.notes{margin-top:26px;border-top:1px solid var(--line);padding-top:19px}.notes summary{font-size:13px;font-weight:600;min-height:32px}.notes ul{padding-left:20px;max-width:1000px;color:var(--muted);font-size:13px}.notes li{margin:9px 0}footer{display:flex;gap:20px;justify-content:space-between;font-size:11px;color:var(--muted);padding:24px 0 0}#selected-label{font-size:13px;font-weight:500;color:var(--green)}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+@media(min-width:1400px){main{padding-top:50px}.chart{height:280px}}
+@media(max-width:900px){.kpi{padding:19px}.value{font-size:38px}.panel-head{align-items:flex-start;flex-direction:column}.stage{padding:0 12px}.stage-label{font-size:12px}}
+@media(max-width:640px){.header-inner{padding:17px 20px}.wordmark{font-size:25px}main{padding:28px 20px 20px}.title-row{display:block}h1{font-size:34px}.period{margin-top:22px;min-width:0}.meta{font-size:11px;margin-bottom:22px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.kpi{padding:17px 14px;border-radius:12px}.kpi h2{font-size:12px}.value{font-size:36px;margin:10px 0}.kpi small{font-size:11px}.insight{font-size:13px;margin:20px 0}.panel{padding:21px 16px;border-radius:12px}h2{font-size:19px}.segmented{width:100%}.segmented button{flex:1;padding:6px 7px;font-size:12px}.chart{height:235px;padding-left:26px}.gridlines{left:26px}.columns{gap:12px}.bar-button{width:75%}.bar-value{font-size:13px}.bar-label{font-size:10px}.funnel{grid-template-columns:1fr;gap:16px}.stage{display:grid;grid-template-columns:1fr auto;padding:0!important;border:0;gap:4px 18px;align-items:center}.stage strong{font-size:25px;margin:0}.stage-meter{grid-column:1/-1;margin:0}.stage small{grid-column:1/-1}.section-title{align-items:flex-start;flex-direction:column;gap:4px}footer{flex-direction:column;gap:8px}.table-wrap{margin-right:-16px}.chart-note{font-size:11px}}
+@media print{button,select,.period,.notes{display:none}.panel,.kpi{break-inside:avoid}main{padding:15px}.kpis{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<header><div class="header-inner"><span class="wordmark">Kodara</span><span class="badge">September 2026 · Snapshot</span></div></header>
+<main>
+<div class="title-row"><div><h1>Triager performance</h1><p>From the first answer to a booked call.</p></div><div class="period"><label for="period">Reporting period</label><select id="period"><option value="month">September so far · Sep 1–29</option></select></div></div>
+<div class="meta">Through Sep 29, 2026 at 8:35 PM Pacific · Known team and test accounts excluded</div>
+<section class="kpis" aria-label="Selected period totals" id="kpis" aria-live="polite"></section>
+<div class="insight"><strong>Last full week: 56 people booked, down 16%.</strong> <span>Widget visitors fell 26%, while email submissions held nearly steady (140 to 135). Calendar reach fell from 77 to 59.</span></div>
+<section class="panel" aria-labelledby="chart-title">
+<div class="panel-head"><div><h2 id="chart-title">Week by week</h2><p id="chart-sub">People who completed a booking through the widget.</p></div><div class="segmented" role="group" aria-label="Chart metric"><button data-metric="booked" aria-pressed="true">Bookings</button><button data-metric="emails" aria-pressed="false">Emails</button><button data-metric="calendar" aria-pressed="false">Calendar</button><button data-metric="loaded" aria-pressed="false">Visitors</button></div></div>
+<div class="chart" id="chart" aria-label="Weekly activity chart"></div><p class="chart-note">Striped bars are partial weeks. Select a bar to explore that week. Counts start at zero.</p>
+</section>
+<section class="panel" aria-labelledby="funnel-title"><div class="section-title"><div><h2 id="funnel-title">Activity across the funnel</h2><p class="sub">Unique people at each step · period activity, not a cohort conversion funnel</p></div><span id="selected-label">September so far</span></div><div class="funnel" id="funnel"></div></section>
+<section class="panel" aria-labelledby="table-title"><div class="panel-head"><div><h2 id="table-title">Question-by-question breakdown</h2><p class="sub" id="breakdown-note" aria-live="polite"></p></div></div><div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable weekly breakdown"><table><caption class="sr-only">Weekly unique people by Triager step</caption><thead><tr><th scope="col">Week</th><th scope="col">Widget loaded</th><th scope="col">Answered Q1</th><th scope="col">Email</th><th scope="col">Business</th><th scope="col">Revenue</th><th scope="col">Calendar</th><th scope="col">Time selected</th><th scope="col">Booked</th></tr></thead><tbody id="rows"></tbody><tfoot id="total"></tfoot></table></div></section>
+<section class="panel" aria-labelledby="rates-title"><h2 id="rates-title">Key progression rates</h2><p class="sub">Compare the larger steps week by week. Each cell shows the later count ÷ the earlier count; these are period activity ratios, not cohort conversion rates.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable weekly progression rates"><table><caption class="sr-only">Weekly progression ratios between selected Triager steps</caption><thead><tr id="rate-head"></tr></thead><tbody id="rate-rows"></tbody><tfoot id="rate-total"></tfoot></table></div></section>
+<details class="notes"><summary>Definitions &amp; data notes</summary><ul>
+<li><strong>Source:</strong> PostHog project 572719. This is a saved snapshot, not a live connection. Period: September 1, 12:00 AM through September 29, 8:35 PM, America/Los_Angeles. Weeks start Monday; September 30 is not included.</li>
+<li><strong>Unique people:</strong> Each person is counted once per event or step within the selected period. Monthly totals are independently deduplicated and do not equal the sum of the weekly rows.</li>
+<li><strong>Widget loaded:</strong> Successfully initialized widgets with captured analytics, not all website visitors or load attempts. This report covers production tracking on kodarahealth.com and go.kodara.com; www and preview origins are not included by the checked analytics configuration.</li>
+<li><strong>Q1:</strong> Completed the video-readiness question. Email, business, revenue and time selected count completed steps. Calendar counts people shown the day-selection step.</li>
+<li><strong>Booked:</strong> People with a tracked booking completion, not uncancelled appointments or attended calls. The month has 206 completion events from 202 people.</li>
+<li><strong>Percentages:</strong> Ratios of activity counts within the selected period, not ordered same-person conversion rates. Qualification intentionally filters some people out, so differences between steps are not all abandonment.</li>
+<li><strong>Exclusions:</strong> Known internal users, Kodara team addresses, example.com tests and identified personal test accounts. Unidentified tests or bots may remain.</li>
+</ul></details>
+<footer><span>PostHog snapshot · America/Los_Angeles</span><a href="https://us.posthog.com/project/572719" target="_blank" rel="noopener noreferrer">Open source in PostHog</a></footer>
+<noscript><p>Enable JavaScript to view the dashboard.</p></noscript>
+</main>
+<script src="data.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const format = n => n.toLocaleString('en-US');
+let metric = 'booked';
+const descriptions = {booked:'People who completed a booking through the widget.',emails:'People who submitted their email address.',calendar:'People who reached the calendar day-selection step.',loaded:'People whose widget successfully initialized with analytics.'};
+weeks.forEach((w,i) => $('period').add(new Option(w.label+' · '+w.note,String(i))));
+function renderBreakdown(){
+ function cells(d){
+  return fields.map((field,i)=>{
+   const note = i===0 ? 'Starting step' : percent(d[field],d[fields[i-1]])+' of previous';
+   return `<td><strong>${format(d[field])}</strong><small>${note}</small></td>`;
+  }).join('');
+ }
+ $('rows').innerHTML = weeks.map((w,i)=>`<tr data-week="${i}" class="${$('period').value===String(i)?'selected':''}"><td><button data-week="${i}">${w.label}</button><small>${w.note}</small></td>${cells(w)}</tr>`).join('');
+ $('total').innerHTML = `<tr><td>September unique totals<small>Deduplicated across the month</small></td>${cells(month)}</tr>`;
+ $('breakdown-note').textContent = 'People at each step, with % of the previous column underneath. Period activity ratios, not cohort conversion rates.';
+}
+const rateColumns = [
+ ['Q1 → calendar','q1','calendar'],
+ ['Q1 → booked','q1','booked'],
+ ['Email → calendar','emails','calendar'],
+ ['Email → booked','emails','booked'],
+ ['Calendar → booked','calendar','booked'],
+ ['Loaded → booked','loaded','booked'],
+];
+$('rate-head').innerHTML = '<th scope="col">Week</th>'+rateColumns.map(([label])=>`<th scope="col">${label}</th>`).join('');
+function rateCells(d){
+ return rateColumns.map(([,from,to])=>`<td><strong>${percent(d[to],d[from])}</strong><small>${format(d[to])} ÷ ${format(d[from])}</small></td>`).join('');
+}
+$('rate-rows').innerHTML = weeks.map((w,i)=>`<tr data-week="${i}"><td>${w.label}<small>${w.note}</small></td>${rateCells(w)}</tr>`).join('');
+$('rate-total').innerHTML = `<tr><td>September<small>From monthly unique totals</small></td>${rateCells(month)}</tr>`;
+function renderChart(){
+ const max = Math.ceil(Math.max(...weeks.map(w=>w[metric]))/4/5)*5*4;
+ $('chart-sub').textContent = descriptions[metric];
+ $('chart').innerHTML = `<div class="gridlines" aria-hidden="true">${[4,3,2,1,0].map(t=>`<div class="gridline"><span>${format(max*t/4)}</span></div>`).join('')}</div><div class="columns">${weeks.map((w,i)=>`<div class="column"><button class="bar-button ${i===0||i===4?'partial':''}" data-week="${i}" style="height:${w[metric]/max*100}%" aria-label="${w.label}: ${w[metric]} ${metric}. ${w.note}. Select week." aria-pressed="${$('period').value===String(i)}"><span class="bar-value">${format(w[metric])}</span></button><span class="bar-label">${w.label}</span></div>`).join('')}</div>`;
+ document.querySelectorAll('[data-metric]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.metric===metric)));
+}
+function render(){
+ const d = $('period').value==='month' ? month : weeks[Number($('period').value)];
+ const cards = [['Widget loaded','loaded','Successful tracked loads'],['Submitted email','emails',percent(d.emails,d.q1)+' of Q1 count'],['Reached calendar','calendar',percent(d.calendar,d.emails)+' of email count'],['People booked','booked',percent(d.booked,d.loaded)+' of widget-load count']];
+ $('kpis').innerHTML = cards.map(([label,key,note])=>`<article class="kpi"><h2>${label}</h2><div class="value">${format(d[key])}</div><small>${note}</small></article>`).join('');
+ $('selected-label').textContent=d.label;
+ $('funnel').innerHTML = [['Widget loaded','loaded'],['Answered Q1','q1'],['Submitted email','emails'],['Reached calendar','calendar'],['People booked','booked']].map(([label,key])=>`<div class="stage"><span class="stage-label">${label}</span><strong>${format(d[key])}</strong><div class="stage-meter" aria-hidden="true"><i style="width:${d[key]/d.loaded*100}%"></i></div><small>${percent(d[key],d.loaded)} of widget-load count</small></div>`).join('');
+ document.querySelectorAll('tr[data-week]').forEach(row=>row.classList.toggle('selected',row.dataset.week===$('period').value));
+ renderChart();
+}
+$('period').addEventListener('change',render);
+document.addEventListener('click',e=>{
+ const week=e.target.closest('button[data-week]');
+ if(week){$('period').value=week.dataset.week;render();if(week.classList.contains('bar-button'))document.querySelector(`.bar-button[data-week="${week.dataset.week}"]`).focus({preventScroll:true});}
+ const toggle=e.target.closest('[data-metric]');
+ if(toggle){metric=toggle.dataset.metric;renderChart();}
+});
+renderBreakdown();
+render();
+</script>
+</body></html>

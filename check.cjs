@@ -1,0 +1,21 @@
+// Run with: node check.cjs
+const assert = require('node:assert/strict');
+const {fields,weeks,month,percent,change} = require('./data.js');
+assert.equal(weeks.length,5);
+assert.equal(month.booked,202);
+assert.equal(month.emails,433);
+assert.equal(weeks.reduce((sum,w)=>sum+w.booked,0),203);
+assert.equal(percent(135,181),'74.6%');
+assert.equal(change(56,67),'-16.4%');
+assert.equal(percent(1,0),'—');
+assert.equal(percent(433,580),'74.7%');
+assert.equal(percent(202,207),'97.6%');
+assert.equal(percent(0,20),'0.0%');
+assert.equal(percent(20,20),'100.0%');
+assert.equal(percent(5,0),'—');
+assert.equal(percent(22,20),'110.0%');
+assert.equal(percent(month.calendar,month.q1),'39.8%');
+assert.equal(percent(month.booked,month.q1),'34.8%');
+assert.equal(percent(month.booked,month.calendar),'87.4%');
+for(const row of [...weeks,month]) for(const field of fields) assert.ok(Number.isInteger(row[field])&&row[field]>=0);
+console.log('Verified snapshot totals, weekly deduplication distinction and percentage calculations.');
