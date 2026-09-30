@@ -45,7 +45,6 @@
 <script>
 const $ = id => document.getElementById(id);
 const format = n => n.toLocaleString('en-US');
-const escapeHtml = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let metric='booked', report, period, weeks=[], selectedWeek=null;
 const descriptions = {booked:'People who completed a booking through the widget.',emails:'People who submitted their email address.',calendar:'People who reached the calendar day-selection step.',loaded:'People whose widget successfully initialized with analytics.'};
 const rateColumns = [
@@ -53,7 +52,12 @@ const rateColumns = [
  ['Email → calendar','emails','calendar'], ['Email → booked','emails','booked'],
  ['Calendar → booked','calendar','booked'], ['Loaded → booked','loaded','booked'],
 ];
-const weekLabel = w => `${new Date(w.start+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'})}–${new Date(lastDay(w.end)+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'})}`;
+const weekLabel = w => {
+ const start=new Date(w.start+'T12:00:00Z'),end=new Date(lastDay(w.end)+'T12:00:00Z');
+ const label=start.toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'});
+ if(w.start===lastDay(w.end)) return label;
+ return label+'–'+(w.start.slice(0,7)===w.end.slice(0,7) ? end.getUTCDate() : end.toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'}));
+};
 const weekNote = w => w.days===7 ? 'Full week' : `Partial week · ${w.days} ${w.days===1?'day':'days'}`;
 function countCells(d){
  return fields.map((f,i)=>`<td><strong>${format(d[f])}</strong><small>${i===0?'Starting step':percent(d[f],d[fields[i-1]])+' of previous'}</small></td>`).join('');
@@ -118,11 +122,12 @@ async function loadReport(){
    $('period').append(group);
   }
   $('period').disabled=false;
-  $('rate-head').innerHTML='<th scope="col">Week</th>'+rateColumns.map(([label])=>`<th scope="col">${escapeHtml(label)}</th>`).join('');
+  $('rate-head').innerHTML='<th scope="col">Week</th>'+rateColumns.map(([label])=>`<th scope="col">${label}</th>`).join('');
   $('breakdown-note').textContent='People at each step, with % of the previous column underneath. Period activity ratios, not cohort conversion rates.';
   renderPeriod();
   $('dashboard-content').hidden=false;
  }catch(error){
+  $('period').replaceChildren(new Option('Report unavailable',''));
   $('meta').textContent='Could not load the report. Please reload this page to try again.';
   $('meta').setAttribute('role','alert');
  }

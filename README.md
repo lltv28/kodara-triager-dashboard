@@ -16,7 +16,7 @@ Calendar months and last 7/30/90 days, refreshed daily from PostHog project 5727
 
 ## Refresh and deployment
 
-GitHub Actions runs at 10:17 UTC daily (3:17 AM PDT / 2:17 AM PST), on main pushes, and on manual dispatch. Scheduled starts may be delayed by GitHub. New snapshots are committed by the workflow and published with GitHub Pages using the Actions deployment source. Only `index.html`, `data.js`, `report.json`, and `.nojekyll` enter the site artifact. Pull requests run checks without credentials or publishing.
+Uses the official [GitHub Pages workflow](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages). GitHub Actions runs at 10:17 UTC daily (3:17 AM PDT / 2:17 AM PST), on main pushes, and on manual dispatch. Scheduled starts may be delayed by GitHub. New snapshots are committed by the workflow and published with GitHub Pages using the Actions deployment source. Only `index.html`, `data.js`, `report.json`, and `.nojekyll` enter the site artifact. Pull requests run checks without credentials or publishing.
 
 Two repository Actions secrets are required:
 
@@ -25,7 +25,7 @@ Two repository Actions secrets are required:
 
 The script uses the [PostHog query API](https://posthog.com/docs/api/query). It validates numeric aggregate rows and constructs its public output separately; API metadata and SQL are never published or logged. It re-queries historical months so late events and updated exclusions are reflected.
 
-Run a refresh manually with `gh workflow run dashboard.yml --repo lltv28/kodara-triager-dashboard`, then inspect the run. If an API key is revoked, replace the secret and rerun. If GitHub disables scheduled runs, re-enable the workflow in Actions; daily snapshot commits normally keep this repository active. No third-party service or new paid plan is required.
+Run a refresh manually with `gh workflow run dashboard.yml --repo lltv28/kodara-triager-dashboard`, then inspect the run. If an API key is revoked, replace the secret and rerun. If [GitHub disables scheduled runs](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/disable-and-enable-workflows), re-enable the workflow in Actions; daily snapshot commits normally keep this repository active. No third-party service or new paid plan is required.
 
 ## Local preview and checks
 
