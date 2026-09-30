@@ -1,6 +1,6 @@
 # Ongoing Triager dashboard
 
-Status: ready-for-agent
+Status: Complete
 
 ## Problem
 The published dashboard is a fixed September snapshot and cannot report later months or rolling periods.
@@ -34,3 +34,7 @@ Test the snapshot export boundary with deterministic API responses: correct inde
 
 ## Out of scope
 Custom start/end dates, raw customer data, widget changes, new tracking events, and booking tests.
+
+## Verification
+
+Export and browser-helper checks passed. Browser checks covered live last7 counts (1,287 loads, 151 emails, 67 calendar, 62 booked through September 28), week drill-down/reset, metric switching, limited coverage, future months, zero periods, report-load failure, and a 390px viewport with 14 weekly bars and no page overflow. Spec and standards reviews found no blocking issues. GitHub Actions run 36669627188 successfully queried, saved and published aggregates.
