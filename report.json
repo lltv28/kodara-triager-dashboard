@@ -1,10 +1,42 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-01T17:01:42.225135+00:00",
+  "generatedAt": "2026-10-02T16:16:17.472066+00:00",
   "timezone": "America/Los_Angeles",
   "coverageStart": "2026-09-01",
-  "through": "2026-09-30",
+  "through": "2026-10-01",
   "ranges": [
+    {
+      "id": "2026-10",
+      "label": "October 2026",
+      "start": "2026-10-01",
+      "end": "2026-10-02",
+      "requestedStart": "2026-10-01",
+      "totals": {
+        "loaded": 254,
+        "q1": 39,
+        "emails": 35,
+        "business": 27,
+        "revenue": 27,
+        "calendar": 19,
+        "time": 15,
+        "booked": 15
+      },
+      "weeks": [
+        {
+          "start": "2026-10-01",
+          "end": "2026-10-02",
+          "days": 1,
+          "loaded": 254,
+          "q1": 39,
+          "emails": 35,
+          "business": 27,
+          "revenue": 27,
+          "calendar": 19,
+          "time": 15,
+          "booked": 15
+        }
+      ]
+    },
     {
       "id": "2026-09",
       "label": "September 2026",
@@ -92,77 +124,77 @@
     {
       "id": "last7",
       "label": "Last 7 days",
-      "start": "2026-09-24",
-      "end": "2026-10-01",
-      "requestedStart": "2026-09-24",
+      "start": "2026-09-25",
+      "end": "2026-10-02",
+      "requestedStart": "2026-09-25",
       "totals": {
-        "loaded": 1472,
-        "q1": 226,
-        "emails": 174,
-        "business": 140,
-        "revenue": 140,
-        "calendar": 83,
-        "time": 76,
-        "booked": 74
+        "loaded": 1563,
+        "q1": 243,
+        "emails": 191,
+        "business": 154,
+        "revenue": 154,
+        "calendar": 90,
+        "time": 79,
+        "booked": 77
       },
       "weeks": [
         {
-          "start": "2026-09-24",
+          "start": "2026-09-25",
           "end": "2026-09-28",
-          "days": 4,
-          "loaded": 800,
-          "q1": 120,
-          "emails": 91,
-          "business": 72,
-          "revenue": 72,
-          "calendar": 46,
-          "time": 43,
-          "booked": 43
+          "days": 3,
+          "loaded": 651,
+          "q1": 99,
+          "emails": 74,
+          "business": 60,
+          "revenue": 60,
+          "calendar": 34,
+          "time": 31,
+          "booked": 31
         },
         {
           "start": "2026-09-28",
-          "end": "2026-10-01",
-          "days": 3,
-          "loaded": 693,
-          "q1": 106,
-          "emails": 83,
-          "business": 68,
-          "revenue": 68,
-          "calendar": 37,
-          "time": 33,
-          "booked": 31
+          "end": "2026-10-02",
+          "days": 4,
+          "loaded": 937,
+          "q1": 144,
+          "emails": 117,
+          "business": 94,
+          "revenue": 94,
+          "calendar": 56,
+          "time": 48,
+          "booked": 46
         }
       ]
     },
     {
       "id": "last30",
       "label": "Last 30 days",
-      "start": "2026-09-01",
-      "end": "2026-10-01",
-      "requestedStart": "2026-09-01",
+      "start": "2026-09-02",
+      "end": "2026-10-02",
+      "requestedStart": "2026-09-02",
       "totals": {
-        "loaded": 5005,
-        "q1": 614,
-        "emails": 463,
-        "business": 373,
-        "revenue": 372,
-        "calendar": 243,
-        "time": 219,
-        "booked": 214
+        "loaded": 5155,
+        "q1": 638,
+        "emails": 485,
+        "business": 390,
+        "revenue": 389,
+        "calendar": 256,
+        "time": 228,
+        "booked": 223
       },
       "weeks": [
         {
-          "start": "2026-09-01",
+          "start": "2026-09-02",
           "end": "2026-09-07",
-          "days": 6,
-          "loaded": 451,
-          "q1": 47,
-          "emails": 33,
-          "business": 27,
-          "revenue": 27,
-          "calendar": 21,
-          "time": 20,
-          "booked": 20
+          "days": 5,
+          "loaded": 365,
+          "q1": 35,
+          "emails": 23,
+          "business": 18,
+          "revenue": 18,
+          "calendar": 15,
+          "time": 14,
+          "booked": 14
         },
         {
           "start": "2026-09-07",
@@ -205,16 +237,16 @@
         },
         {
           "start": "2026-09-28",
-          "end": "2026-10-01",
-          "days": 3,
-          "loaded": 693,
-          "q1": 106,
-          "emails": 83,
-          "business": 68,
-          "revenue": 68,
-          "calendar": 37,
-          "time": 33,
-          "booked": 31
+          "end": "2026-10-02",
+          "days": 4,
+          "loaded": 937,
+          "q1": 144,
+          "emails": 117,
+          "business": 94,
+          "revenue": 94,
+          "calendar": 56,
+          "time": 48,
+          "booked": 46
         }
       ]
     },
@@ -222,17 +254,17 @@
       "id": "last90",
       "label": "Last 90 days",
       "start": "2026-09-01",
-      "end": "2026-10-01",
-      "requestedStart": "2026-07-03",
+      "end": "2026-10-02",
+      "requestedStart": "2026-07-04",
       "totals": {
-        "loaded": 5005,
-        "q1": 614,
-        "emails": 463,
-        "business": 373,
-        "revenue": 372,
-        "calendar": 243,
-        "time": 219,
-        "booked": 214
+        "loaded": 5236,
+        "q1": 650,
+        "emails": 495,
+        "business": 399,
+        "revenue": 398,
+        "calendar": 262,
+        "time": 234,
+        "booked": 229
       },
       "weeks": [
         {
@@ -289,16 +321,16 @@
         },
         {
           "start": "2026-09-28",
-          "end": "2026-10-01",
-          "days": 3,
-          "loaded": 693,
-          "q1": 106,
-          "emails": 83,
-          "business": 68,
-          "revenue": 68,
-          "calendar": 37,
-          "time": 33,
-          "booked": 31
+          "end": "2026-10-02",
+          "days": 4,
+          "loaded": 937,
+          "q1": 144,
+          "emails": 117,
+          "business": 94,
+          "revenue": 94,
+          "calendar": 56,
+          "time": 48,
+          "booked": 46
         }
       ]
     }
